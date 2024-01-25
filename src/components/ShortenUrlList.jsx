@@ -1,3 +1,5 @@
+import { ensureAbsolutPath } from '../utils/ensureAbsolutPath'
+
 export const ShortenUrls = ({ urls }) => {
   return (
     <ul>
@@ -6,7 +8,16 @@ export const ShortenUrls = ({ urls }) => {
           <a href={shortUrl} target="_blank" rel="noreferrer">
             {shortUrl}
           </a>
-          <p>Original URL: {originalUrl}</p>
+          <p>
+            Original URL:{' '}
+            <a
+              href={ensureAbsolutPath(originalUrl)}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {originalUrl}
+            </a>
+          </p>
         </li>
       ))}
     </ul>
