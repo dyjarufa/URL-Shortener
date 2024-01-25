@@ -55,4 +55,4 @@ Thanks to OpenAI's ChatGPT for providing valuable guidance and suggestions durin
 
 ---
 
-Developed with ❤️ by [Your Name]
+Developed with ❤️ by Jady Rufino
