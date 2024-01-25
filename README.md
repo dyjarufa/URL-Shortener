@@ -49,10 +49,6 @@ To run this project locally, follow these steps:
 - Uses the Single Responsibility Principle (SRP) from SOLID to separate URL formatting logic into a utility function.
 - URLs are validated and transformed into absolute URLs to ensure correct redirection.
 
-## Acknowledgments
-
-Thanks to OpenAI's ChatGPT for providing valuable guidance and suggestions during the development of this project.
-
 ---
 
 Developed with ❤️ by Jady Rufino
