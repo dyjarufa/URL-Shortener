@@ -13,7 +13,7 @@ export const UrlInputForm = ({ onSubmit }) => {
   }
 
   return (
-    <form action={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <input
         type="text"
         value={url}
