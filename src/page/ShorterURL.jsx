@@ -1,61 +1,37 @@
 import { useEffect, useState } from 'react'
-
 import { v4 as uuidv4 } from 'uuid'
+import { urlStorage } from '../utils/urlStorage'
+import { UrlInputForm } from '../components/UrlInputForm'
+import { ShortenUrls } from '../components/ShortenUrlList'
 
 export function ShorterURL() {
-  const [originaltUrl, setOriginaltUrl] = useState()
-  const [shortedUrl, setShortedUrl] = useState([])
+  const [shortedUrls, setShortedUrls] = useState(urlStorage.getUrls())
+  const [error, setError] = useState('')
 
   useEffect(() => {
-    const savedUrls = localStorage.getItem('shortedUrl')
+    urlStorage.savedUrls(shortedUrls)
+  }, [shortedUrls])
 
-    console.log(savedUrls)
-
-    if (savedUrls) {
-      setShortedUrl(JSON.parse(savedUrls))
-    }
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem(`${shortedUrl}`, JSON.stringify(originaltUrl))
-  }, [originaltUrl, shortedUrl])
-
-  const handleInputChange = (event) => {
-    setOriginaltUrl(event.target.value)
-  }
-
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-
+  const addShortenedUrl = (originalUrl) => {
     try {
-      const newShortedUrl = `http://localhost:3000/${uuidv4()}`
-      setShortedUrl([...shortedUrl, newShortedUrl])
+      const uniqueId = uuidv4()
+      const newShortedUrl = {
+        id: uniqueId,
+        shortUrl: `localhost:3000/${uniqueId}`,
+        originalUrl,
+      }
+
+      setShortedUrls([...shortedUrls, newShortedUrl])
     } catch (error) {
-      throw new Error('somenthing wrong' + error)
+      setError("Couldn't Shorten the URL" + error)
     }
   }
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={originaltUrl}
-          placeholder="set up URL"
-          onChange={handleInputChange}
-        />
-        <button>shorter URL</button>
-      </form>
-      {shortedUrl.length > 0 && (
-        <ul>
-          {shortedUrl.map((url, index) => (
-            <li key={index}>
-              <a href={url} target="_blank" rel="noreferrer">
-                {url}
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
+      <UrlInputForm onSubmit={addShortenedUrl} />
+      {error && <p>{error}</p>}
+      <ShortenUrls urls={shortedUrls} />
     </div>
   )
 }
